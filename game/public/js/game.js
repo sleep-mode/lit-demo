@@ -170,7 +170,7 @@ Game.prototype.handleGraphics = function(graphics) {
     if (pid == clientId) {
       graphics.fillStyle = '#fff';
     } else {
-      graphics.fillStyle = '#f00';
+      graphics.fillStyle = '#f0f';
     }
     graphics.arc(parseInt(self.players[pid].x), parseInt(self.players[pid].y), 3, 0, Math.PI * 2, true);
     graphics.fill();
