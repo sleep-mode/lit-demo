@@ -64,11 +64,11 @@ var Server = function() {
       if (client) {
         var data = Client().get(ids[i]).data();
         data.player.x += data.player.direction * 300 * delta;
-        if (data.player.direction > 0 && data.player.x > 300) {
-          data.player.x = 0;
+        if (data.player.direction > 0 && data.player.x > 1000) {
+          data.player.x = data.player.x % 1000;
         }
         if (data.player.direction < 0 && data.player.x < 0) {
-          data.player.x = 300;
+          data.player.x = 1000;
         }
       }
     }

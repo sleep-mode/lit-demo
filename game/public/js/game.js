@@ -1,6 +1,6 @@
 const MAP_HEIGHT = 300;
 
-let width = window.innerWidth;
+let width = 1000; //window.innerWidth;
 let middle = (window.innerHeight / 2);
 let speed = 300;
 let coinSpawn = 1;
@@ -101,7 +101,7 @@ Game.prototype.handleNetwork = function(socket) {
 Game.prototype.updatePlayer = function(delta, player) {
   player.x += player.direction * speed * delta;  
   if (player.direction > 0 && player.x > width) {
-    player.x = 0;
+    player.x = player.x % 1000;
   }
   if (player.direction < 0 && player.x < 0) {
     player.x = width;
@@ -209,12 +209,12 @@ Game.prototype.handleGraphics = function(graphics) {
     graphics.fill();
   }
 
-  for (let i = 0; i < self.enemies.length; i++) {
-    graphics.beginPath();
-    graphics.fillStyle = '#f00';
-    graphics.arc(parseInt(self.enemies[i].x), parseInt(self.enemies[i].y), 30, 0, Math.PI * 2, true);
-    graphics.fill();
-  }
+  // for (let i = 0; i < self.enemies.length; i++) {
+  //   graphics.beginPath();
+  //   graphics.fillStyle = '#f00';
+  //   graphics.arc(parseInt(self.enemies[i].x), parseInt(self.enemies[i].y), 30, 0, Math.PI * 2, true);
+  //   graphics.fill();
+  // }
   
   graphics.fillStyle = '#FFF';
   graphics.font = '12px Tahoma';
