@@ -1,5 +1,8 @@
-let width = 600;
-let speed = 50;
+const MAP_HEIGHT = 300;
+
+let width = window.innerWidth;
+let middle = (window.innerHeight / 2);
+let speed = 300;
 let coinSpawn = 1;
 let lastCoinSpawn = 1;
 let basicEnemySpawn = 3;
@@ -22,7 +25,7 @@ Game.prototype.initPlayer = function(name) {
   return {
     name: name,
     x: 10,
-    y: 50,
+    y: middle,
     direction: -1
   }
 }
@@ -30,7 +33,7 @@ Game.prototype.initPlayer = function(name) {
 Game.prototype.spawnCoin = function() {
   return {
     x: Math.random() * width,
-    y: 50
+    y: middle
   }
 }
 
@@ -38,7 +41,7 @@ Game.prototype.spawnEnemy = function() {
   return {
     life: enemyLife,
     x: Math.random() * width,
-    y: 50
+    y: middle
   }
 }
 
@@ -158,21 +161,43 @@ Game.prototype.handleGraphics = function(graphics) {
   //Draw loop
   var self = this;
 
+  let screenMiddle = (screenHeight / 2) - (MAP_HEIGHT / 2);
+
   graphics.fillStyle = '#333333';
   graphics.fillRect(0, 0, screenWidth, screenHeight);
 
   graphics.fillStyle = '#222';
-  graphics.fillRect(0, 40, width, 20);
+  graphics.fillRect(0, screenMiddle, screenWidth, MAP_HEIGHT);
+
+  var dummyPositions = [100, 500, 600, 1200, 1300, 1400, 1500];
+  dummyPositions.forEach((x) => {
+    graphics.beginPath();
+    graphics.arc(parseInt(x), parseInt(middle), 30, 0, Math.PI * 2, true);
+    graphics.fillStyle = '#555';
+    graphics.fill();
+  });
 
   for (var i = 0; i < Object.keys(self.players).length; i++) {
     graphics.beginPath();
     var pid = Object.keys(self.players)[i];
     if (pid == clientId) {
+      var playerPosition = self.players[pid];
+      graphics.font = '12px Tahoma';
       graphics.fillStyle = '#fff';
+      var nearPlayerCount = () => {
+        var cnt = 0;
+        const distance = 200;
+        dummyPositions.forEach((x) => {
+          if (Math.abs(playerPosition.x - x) < distance)
+            cnt++;
+        });
+        return cnt;
+      };
+      graphics.fillText(nearPlayerCount(), parseInt(playerPosition.x), parseInt(playerPosition.y) - 50);
     } else {
       graphics.fillStyle = '#f0f';
     }
-    graphics.arc(parseInt(self.players[pid].x), parseInt(self.players[pid].y), 3, 0, Math.PI * 2, true);
+    graphics.arc(parseInt(self.players[pid].x), parseInt(self.players[pid].y), 30, 0, Math.PI * 2, true);
     graphics.fill();
     graphics.fillText(pid, self.players[pid].x, parseInt(self.players[pid].y + 20));
   }
@@ -180,14 +205,14 @@ Game.prototype.handleGraphics = function(graphics) {
   for (let i = 0; i < self.coins.length; i++) {
     graphics.beginPath();
     graphics.fillStyle = '#ff0';
-    graphics.arc(parseInt(self.coins[i].x), parseInt(self.coins[i].y), 3, 0, Math.PI * 2, true);
+    graphics.arc(parseInt(self.coins[i].x), parseInt(self.coins[i].y), 30, 0, Math.PI * 2, true);
     graphics.fill();
   }
 
   for (let i = 0; i < self.enemies.length; i++) {
     graphics.beginPath();
     graphics.fillStyle = '#f00';
-    graphics.arc(parseInt(self.enemies[i].x), parseInt(self.enemies[i].y), 3, 0, Math.PI * 2, true);
+    graphics.arc(parseInt(self.enemies[i].x), parseInt(self.enemies[i].y), 30, 0, Math.PI * 2, true);
     graphics.fill();
   }
   

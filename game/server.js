@@ -63,7 +63,7 @@ var Server = function() {
       var client = Client().get(ids[i]);
       if (client) {
         var data = Client().get(ids[i]).data();
-        data.player.x += data.player.direction * 30 * delta;
+        data.player.x += data.player.direction * 300 * delta;
         if (data.player.direction > 0 && data.player.x > 300) {
           data.player.x = 0;
         }
@@ -87,7 +87,7 @@ var Server = function() {
       if (client) {
         client.data().player = {
           x: 10,
-          y: 50,
+          y: 500,
           direction: 1
         };
         client.emit('welcome', {

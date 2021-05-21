@@ -53,7 +53,7 @@ function startGame() {
   document.getElementById('gameAreaWrapper').style.display = 'block';
   document.getElementById('startMenuWrapper').style.display = 'none';
 
-  playerName = playerNameInput.value.replace(/(<([^>]+)>)/ig, '');
+  playerName = 'test'; //playerNameInput.value.replace(/(<([^>]+)>)/ig, '');
 
   //Set up socket
   socket = new eio.Socket('ws://' + window.location.hostname + ':5000/');
@@ -100,6 +100,7 @@ function validNick() {
 window.onload = function() {
   'use strict';
 
+  startGame();
   btn = document.getElementById('startButton');
   nickErrorText = document.querySelector('#startMenu .input-error');
   playerNameInput = document.getElementById('playerNameInput')
